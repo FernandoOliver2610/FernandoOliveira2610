@@ -8,4 +8,34 @@ Data,Vendas
 2024-01-07,310
 2024-01-08,330
 2024-01-09,350
-2024-01-10,400
+2024-01-10,400 
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Carregar os dados do arquivo CSV
+df = pd.read_csv('dados_vendas.csv')
+print(df)
+# Converter a coluna de data para o formato correto
+df['Data'] = pd.to_datetime(df['Data'])
+display(df)
+# Calcular estatísticas básicas
+media_vendas = df['Vendas'].mean()
+maior_venda = df['Vendas'].max()
+data_maior_venda = df.loc[df['Vendas'].idxmax(), 'Data']
+display(df)
+# Criar gráfico de vendas
+plt.figure(figsize=(10,5))
+plt.plot(df['Data'], df['Vendas'], marker='o', linestyle='-', color='b', label='Vendas')
+plt.axhline(media_vendas, color='r', linestyle='--', label=f'Média: {media_vendas:.2f}')
+plt.xlabel('Data')
+plt.ylabel('Vendas')
+plt.title('Análise de Vendas Diárias')
+plt.legend()
+plt.xticks(rotation=45)
+plt.grid()
+plt.show()
+
+# Insight
+print(f"A média de vendas foi de {media_vendas:.2f} unidades/dia.")
+print(f"O dia com maior venda foi {data_maior_venda.strftime('%Y-%m-%d')} com {maior_venda} unidades.")
